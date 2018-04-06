@@ -233,6 +233,31 @@ public class Twitter_loop {
 	return myList;
 		 
     }
+  
+    public int contador (String usuario){
+        initMongoDB();
+        items = db.getCollection(usuario);
+        //query("dnacho");
+       
+        BasicDBObject fields = new BasicDBObject("_id", false).append("user_name", false).append("tweet_ID",false);
+        DBCursor cursor = items.find(new BasicDBObject(), fields).sort(new BasicDBObject("_id",1));
+        int guardados = (int) items.count();
+		
+		List myList = new ArrayList();
+		int n=1;
+		
+		while (cursor.hasNext()) {
+                     DBObject obj = cursor.next();  
+                     String texto = (String) obj.get("tweet_text");
+                     myList.add(texto);
+          
+		}
+	
+         
+                 
+	return guardados;
+		 
+    }
     
     public List getTweetsRecords() throws InterruptedException {
         BasicDBObject fields = new BasicDBObject("_id", false).append("user_name", false).append("tweet_ID",false);
